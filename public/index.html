@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudScript ☁️✨</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated background elements */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.3; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .floating-moon {
+      position: fixed;
+      top: 5%;
+      right: 5%;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle at 30% 30%, #fff, #f0f0f0, #e0e0e0);
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.4), 0 0 60px rgba(255, 255, 255, 0.2);
+      animation: float 6s ease-in-out infinite;
+      z-index: 10;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    .cloud {
+      position: fixed;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      opacity: 0.8;
+      animation: drift 20s linear infinite;
+      filter: blur(1px);
+    }
+
+    .cloud:before {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 50px;
+    }
+
+    .cloud:after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+    }
+
+    .cloud1 {
+      width: 120px;
+      height: 50px;
+      top: 15%;
+      left: -180px;
+      animation-duration: 25s;
+    }
+
+    .cloud1:before {
+      width: 90px;
+      height: 90px;
+      top: -45px;
+      left: 15px;
+    }
+
+    .cloud1:after {
+      width: 70px;
+      height: 70px;
+      top: -35px;
+      right: 10px;
+    }
+
+    .cloud2 {
+      width: 100px;
+      height: 40px;
+      top: 60%;
+      left: -150px;
+      animation-duration: 30s;
+      animation-delay: -10s;
+    }
+
+    .cloud2:before {
+      width: 80px;
+      height: 80px;
+      top: -40px;
+      left: 20px;
+    }
+
+    .cloud2:after {
+      width: 60px;
+      height: 60px;
+      top: -30px;
+      right: 15px;
+    }
+
+    .cloud3 {
+      width: 140px;
+      height: 60px;
+      top: 35%;
+      left: -200px;
+      animation-duration: 35s;
+      animation-delay: -20s;
+    }
+
+    .cloud3:before {
+      width: 100px;
+      height: 100px;
+      top: -50px;
+      left: 20px;
+    }
+
+    .cloud3:after {
+      width: 80px;
+      height: 80px;
+      top: -40px;
+      right: 20px;
+    }
+
+    @keyframes drift {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(100vw + 150px)); }
+    }
+
+    /* Main container */
+    .container {
+      position: relative;
+      z-index: 3;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Notebook styling */
+    .notebook {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 24px;
+      padding: 3rem 2rem 2rem 3rem;
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 8px 32px rgba(59, 130, 246, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      backdrop-filter: blur(20px);
+      margin-bottom: 2rem;
+    }
+
+    .notebook:before {
+      content: '';
+      position: absolute;
+      left: 40px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(59, 130, 246, 0.3);
+      opacity: 0.6;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #f1f5f9;
+      text-align: center;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+      100% { text-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.2); }
+    }
+
+    /* Form styling */
+    .dream-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 16px 20px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      background: rgba(59, 130, 246, 0.05);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: #f1f5f9;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      resize: vertical;
+      min-height: 50px;
+      backdrop-filter: blur(10px);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: rgba(59, 130, 246, 0.5);
+      background: rgba(59, 130, 246, 0.1);
+      box-shadow: 
+        0 0 0 3px rgba(59, 130, 246, 0.1),
+        0 8px 32px rgba(59, 130, 246, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(148, 163, 184, 0.6);
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      font-size: 1rem;
+      color: rgba(148, 163, 184, 0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      font-weight: 500;
+    }
+
+    .form-group input:focus + label,
+    .form-group textarea:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group textarea:not(:placeholder-shown) + label {
+      top: -12px;
+      left: 16px;
+      font-size: 0.875rem;
+      color: rgba(59, 130, 246, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 2px 8px;
+      border-radius: 6px;
+      backdrop-filter: blur(10px);
+    }
+
+    .dream-btn {
+      background: linear-gradient(135deg, #3b82f6, #6366f1, #8b5cf6);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        0 4px 14px rgba(59, 130, 246, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.025em;
+    }
+
+    .dream-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 25px rgba(59, 130, 246, 0.4),
+        0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .dream-btn:active {
+      transform: translateY(0);
+    }
+
+    .dream-btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .dream-btn:hover:before {
+      left: 100%;
+    }
+
+    /* Dream entries */
+    .dreams-container {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .dream-entry {
+      background: rgba(59, 130, 246, 0.06);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.3),
+        0 4px 16px rgba(59, 130, 246, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      backdrop-filter: blur(20px);
+    }
+
+    .dream-entry:nth-child(even) {
+      animation-delay: 0.2s;
+    }
+
+    .dream-entry:nth-child(odd) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes slideIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .dream-entry:before {
+      content: '✨';
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.5rem;
+      animation: sparkle 2s infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .dream-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: #f1f5f9;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+      padding-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .dream-description {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+      margin-bottom: 1.5rem;
+    }
+
+    .dream-mood {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));
+      color: #93c5fd;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .dream-date {
+      font-size: 0.875rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    /* Shooting stars */
+    .shooting-star {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 10px white;
+      animation: shoot 3s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes shoot {
+      0% {
+        opacity: 0;
+        transform: translateX(-100px) translateY(100px);
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(100vw) translateY(-100px);
+      }
+    }
+
+    /* Responsive design */
+            @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .notebook {
+        padding: 2rem 1rem 1rem 2rem;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .floating-moon {
+        width: 70px;
+        height: 70px;
+        top: 3%;
+        right: 3%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated background elements -->
+  <div class="stars"></div>
+  <div class="floating-moon"></div>
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+  <div class="shooting-star"></div>
+
+  <div class="container">
+    <div class="notebook">
+      <h1>CloudScript: Dream Journal</h1>
+
+      <form class="dream-form" id="dreamForm">
+        <div class="form-group">
+          <input type="text" id="title" placeholder=" " required />
+          <label for="title">Dream title</label>
+        </div>
+        
+        <div class="form-group">
+          <textarea id="description" placeholder=" " required></textarea>
+          <label for="description">What happened in your dream?</label>
+        </div>
+        
+        <div class="form-group">
+          <input type="text" id="mood" placeholder=" " />
+          <label for="mood">Mood (e.g. calm, weird, scary)</label>
+        </div>
+        
+        <button type="submit" class="dream-btn">Capture Dream</button>
+      </form>
+    </div>
+
+    <div class="dreams-container" id="dreamsList">
+      <!-- Dreams will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    // Create stars
+    function createStars() {
+      const starsContainer = document.querySelector('.stars');
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 2 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+
+    // Create shooting stars periodically
+    function createShootingStar() {
+      const shootingStar = document.createElement('div');
+      shootingStar.className = 'shooting-star';
+      shootingStar.style.top = Math.random() * 50 + '%';
+      shootingStar.style.left = '-100px';
+      document.body.appendChild(shootingStar);
+      
+      setTimeout(() => {
+        shootingStar.remove();
+      }, 3000);
+    }
+
+    // Dream storage (in-memory)
+    let dreams = [
+      {
+        id: 1,
+        title: "Flying Through Clouds",
+        description: "I was soaring through fluffy white clouds, feeling completely weightless and free. The sky was painted in shades of pink and gold, and I could hear soft music playing in the distance.",
+        mood: "Peaceful",
+        date: new Date(Date.now() - 86400000) // Yesterday
+      },
+      {
+        id: 2,
+        title: "Underwater City",
+        description: "I discovered a magnificent city beneath the ocean waves. The buildings were made of coral and pearls, and mermaids swam gracefully between the towers. Everything glowed with a soft, ethereal light.",
+        mood: "Mystical",
+        date: new Date(Date.now() - 172800000) // 2 days ago
+      }
+    ];
+
+    let nextId = 3;
+
+    const form = document.getElementById('dreamForm');
+    const dreamsList = document.getElementById('dreamsList');
+
+    function getMoodEmoji(mood) {
+      const moodEmojis = {
+        peaceful: '🕊️',
+        calm: '🌊',
+        mystical: '🔮',
+        weird: '🎭',
+        scary: '👻',
+        happy: '😊',
+        sad: '😢',
+        exciting: '⚡',
+        romantic: '💕',
+        adventure: '🗺️'
+      };
+      return moodEmojis[mood.toLowerCase()] || '🌟';
+    }
+
+    const renderDreams = () => {
+      dreamsList.innerHTML = '';
+      dreams.forEach((dream, index) => {
+        const div = document.createElement('div');
+        div.className = 'dream-entry';
+        div.style.animationDelay = `${index * 0.2}s`;
+        
+        div.innerHTML = `
+          <h3 class="dream-title">${dream.title}</h3>
+          <p class="dream-description">${dream.description}</p>
+          <span class="dream-mood">${getMoodEmoji(dream.mood)} ${dream.mood}</span>
+          <p class="dream-date">${new Date(dream.date).toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}</p>
+        `;
+        dreamsList.appendChild(div);
+      });
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const mood = document.getElementById('mood').value || 'Dreamy';
+
+      const newDream = {
+        id: nextId++,
+        title,
+        description,
+        mood,
+        date: new Date()
+      };
+
+      dreams.unshift(newDream);
+      form.reset();
+      renderDreams();
+      
+      // Create a shooting star when a dream is added
+      createShootingStar();
+    });
+
+    // Initialize
+    createStars();
+    renderDreams();
+    
+    // Create shooting stars periodically
+    setInterval(createShootingStar, 5000);
+    
+    // Add floating animation to form elements
+    document.addEventListener('DOMContentLoaded', () => {
+      const formGroups = document.querySelectorAll('.form-group');
+      formGroups.forEach((group, index) => {
+        group.style.animationDelay = `${index * 0.1}s`;
+      });
+    });
+
+    // Add parallax effect to moon
+    document.addEventListener('mousemove', (e) => {
+      const moon = document.querySelector('.floating-moon');
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      moon.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'Enter') {
+        form.dispatchEvent(new Event('submit'));
+      }
+    });
+  </script>
+</body>
+</html>
